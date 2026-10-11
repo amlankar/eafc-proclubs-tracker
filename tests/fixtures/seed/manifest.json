@@ -1,0 +1,13 @@
+{
+  "club": {
+    "name": "Demo FC",
+    "id": "900001",
+    "platform": "common-gen5",
+    "edition": "FC27"
+  },
+  "observed": 1791667106,
+  "source": "Anonymized offline test fixture",
+  "provenance": {
+    "note": "IDs and names replaced consistently; counters retained to exercise aggregation."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "eafc-proclubs-tracker",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write web package.json",
+    "check": "prettier --check web package.json && node --check web/app.js && node --check web/stat-help.js"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

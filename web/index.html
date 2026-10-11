@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EA FC Clubs</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/stat-help.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Club home"
+        ><span class="crest"
+          ><span id="clubInitials">FC</span
+          ><span id="clubEdition">27</span></span
+        ><span id="brandName">EA FC<br /><strong>CLUBS.</strong></span></a
+      >
+      <nav aria-label="Sections">
+        <button class="nav active" data-tab="overview" aria-current="page">
+          Overview
+        </button>
+        <button class="nav" data-tab="players">Players</button>
+        <button class="nav" data-tab="matches">Matches</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="dot"></span> FC 27 <span id="division">—</span>
+      </div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <span id="clubMeta">EA FC Clubs</span>
+        <div class="top-actions">
+          <span
+            id="activity"
+            class="activity-marker"
+            title="Recent match activity"
+            hidden
+            ><i aria-hidden="true"></i>Playing</span
+          ><span id="sync"></span>
+          <details class="export-menu">
+            <summary>Export ↓</summary>
+            <div>
+              <a href="/api/export">All data · JSON</a
+              ><a id="csvExport" href="/api/players.csv">Player stats · CSV</a>
+            </div>
+          </details>
+        </div>
+      </header>
+      <div id="error" class="notice" hidden role="alert"></div>
+      <section class="page-heading">
+        <h1 id="pageTitle">Overview</h1>
+        <span class="season-tag">2026 / 27</span>
+      </section>
+      <section class="tab" id="overview">
+        <div id="clubCards" class="grid-two club-summary"></div>
+        <div class="grid-two">
+          <article class="panel">
+            <div class="section-heading">
+              <h2>
+                <button
+                  type="button"
+                  class="stat-help"
+                  data-stat-help="skill_rating"
+                  aria-label="Explain skill rating"
+                >
+                  Skill rating
+                </button>
+              </h2>
+              <strong id="skillValue"></strong>
+            </div>
+            <div id="skillChart"></div>
+          </article>
+          <article class="panel">
+            <div class="section-heading">
+              <h2>Goals</h2>
+              <span>Club totals</span>
+            </div>
+            <div id="clubGoals"></div>
+          </article>
+        </div>
+        <section class="match-section">
+          <div class="section-heading">
+            <h2>Match performance</h2>
+            <span class="windowLabel"></span>
+          </div>
+          <div class="grid-two">
+            <article class="panel">
+              <div class="section-heading">
+                <h2>Goals</h2>
+                <div class="legend">
+                  <span class="key lime"></span>Scored
+                  <span class="key rose"></span>Conceded
+                </div>
+              </div>
+              <div id="goalsChart"></div>
+            </article>
+            <article class="panel">
+              <div class="section-heading">
+                <h2>Player comparison</h2>
+                <select id="comparisonMetric" aria-label="Comparison statistic">
+                  <option value="contributions">Goals + assists</option>
+                  <option value="rating">Rating</option>
+                  <option value="pass_completion">Pass accuracy</option>
+                  <option value="interceptions">Interceptions</option>
+                  <option value="second_assists">Second assists</option>
+                  <option value="possession_won">Possession won</option>
+                  <option value="possession_lost">Possession lost</option>
+                  <option value="aerial_duels_won">Aerial wins</option>
+                  <option value="passes_failed">Passes failed</option>
+                  <option value="offside_passes">Offside passes</option>
+                  <option value="tackles_lost">Tackles lost</option>
+                  <option value="dangerous_tackles">Dangerous tackles</option>
+                  <option value="fouls_conceded">Fouls committed</option>
+                  <option value="penalties_conceded">Penalties conceded</option>
+                  <option value="out_of_position">Out of position</option>
+                </select>
+              </div>
+              <div class="legend" id="comparisonLegend">
+                <span class="key lime"></span>Goals
+                <span class="key blue"></span>Assists
+              </div>
+              <div id="comparisonChart"></div>
+            </article>
+          </div>
+          <div class="section-heading">
+            <h2>Team performance</h2>
+            <div
+              class="segments small"
+              role="group"
+              aria-label="Overview count display"
+            >
+              <button data-overview-average="total">Totals</button
+              ><button class="active" data-overview-average="average">
+                Per match
+              </button>
+            </div>
+          </div>
+          <div class="grid-two overview-breakdown">
+            <div class="performance-column">
+              <article
+                class="panel performance-group"
+                aria-labelledby="shootingTitle"
+              >
+                <h2 id="shootingTitle">Shooting</h2>
+                <div id="shootingSummary"></div>
+                <div class="chart-heading">
+                  <h3>Shot location</h3>
+                  <div class="legend">
+                    <span class="key lime"></span>On target
+                    <span class="key rose"></span>Off target
+                  </div>
+                </div>
+                <div id="shootingBreakdown"></div>
+              </article>
+              <article
+                class="panel performance-group"
+                aria-labelledby="defenceTitle"
+              >
+                <h2 id="defenceTitle">Defence</h2>
+                <div id="defenceSummary"></div>
+                <div class="chart-heading">
+                  <h3>Tackles</h3>
+                  <div class="legend">
+                    <span class="key lime"></span>Won
+                    <span class="key rose"></span>Not won
+                  </div>
+                </div>
+                <div id="defenceBreakdown"></div>
+              </article>
+            </div>
+            <div class="performance-column">
+              <article
+                class="panel performance-group"
+                aria-labelledby="passingTitle"
+              >
+                <h2 id="passingTitle">Passing</h2>
+                <div id="passingSummary"></div>
+                <div class="chart-heading">
+                  <h3>Distance</h3>
+                  <div class="legend">
+                    <span class="key lime"></span>Completed
+                    <span class="key rose"></span>Failed
+                  </div>
+                </div>
+                <div id="rangeBreakdown"></div>
+                <div class="chart-subsection">
+                  <div class="chart-heading"><h3>Direction</h3></div>
+                  <div id="passingChart"></div>
+                </div>
+              </article>
+              <article
+                class="panel performance-group"
+                aria-labelledby="controlTitle"
+              >
+                <h2 id="controlTitle">Ball control</h2>
+                <div id="controlSummary"></div>
+                <div class="chart-heading">
+                  <h3>Possession by area</h3>
+                  <div class="legend">
+                    <span class="key lime"></span>Won
+                    <span class="key rose"></span>Lost
+                  </div>
+                </div>
+                <div id="possessionChart"></div>
+                <div class="chart-subsection">
+                  <div class="chart-heading"><h3>Dribbling</h3></div>
+                  <div id="controlBreakdown"></div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <article class="panel" id="teamTrend"></article>
+          <div class="grid-two">
+            <article class="panel">
+              <div class="section-heading">
+                <h2>Recent matches</h2>
+                <button data-go="matches" class="text-button">
+                  View all ↗
+                </button>
+              </div>
+              <div id="form" class="form"></div>
+              <div id="recentMatches"></div>
+            </article>
+            <article class="panel">
+              <div class="section-heading">
+                <h2>Sessions</h2>
+                <span>Results</span>
+              </div>
+              <div id="sessions" class="table-wrap"></div>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="section-heading">
+              <h2>Team stats</h2>
+              <div
+                class="segments small"
+                role="group"
+                aria-label="Team count display"
+              >
+                <button class="active" data-team-average="total">Totals</button
+                ><button data-team-average="average">Per match</button>
+              </div>
+            </div>
+            <div id="teamStats"></div>
+          </article>
+        </section>
+      </section>
+      <section class="tab" id="players" hidden>
+        <div class="players-view-bar">
+          <div class="segments" role="group" aria-label="Player view">
+            <button class="active" data-players-view="roster">Players</button
+            ><button data-players-view="compare">Head to head</button>
+          </div>
+        </div>
+        <div id="playersRoster">
+          <div class="toolbar">
+            <label class="search-label"
+              ><span class="sr-only">Find a player</span
+              ><input
+                id="playerSearch"
+                placeholder="Find a player"
+                type="search"
+            /></label>
+          </div>
+          <div class="section-heading">
+            <span id="playerScope"></span>
+            <div
+              id="playerAverage"
+              class="segments small"
+              role="group"
+              aria-label="Count display"
+            >
+              <button class="active" data-average="total">Totals</button
+              ><button data-average="average">Per match</button>
+            </div>
+          </div>
+          <article class="panel table-wrap" id="playerTable"></article>
+          <article class="panel" id="playerDetail" hidden></article>
+        </div>
+        <article class="panel" id="headToHead" hidden></article>
+      </section>
+      <section class="tab" id="matches" hidden>
+        <div class="toolbar">
+          <span id="matchCount"></span
+          ><label class="search-label"
+            ><span class="sr-only">Find an opponent</span
+            ><input
+              id="matchSearch"
+              type="search"
+              placeholder="Find an opponent"
+          /></label>
+        </div>
+        <article class="panel table-wrap" id="matchTable"></article>
+        <div id="pagination" class="pagination"></div>
+        <article class="panel">
+          <div class="section-heading">
+            <h2>Opponents</h2>
+            <span class="windowLabel"></span>
+          </div>
+          <div id="opponents" class="table-wrap"></div>
+        </article>
+      </section>
+      <footer class="filters">
+        <div class="filter-bar">
+          <label>From<input type="date" id="startDate" /></label
+          ><label>To<input type="date" id="endDate" /></label
+          ><label
+            >Matches<select id="matchKind">
+              <option value="all">All</option>
+              <option value="league">League</option>
+              <option value="friendly">Friendly</option>
+              <option value="playoff">Playoffs</option>
+            </select></label
+          ><button id="applyFilters" class="button">Apply</button
+          ><button id="resetFilters" class="text-button">Reset</button
+          ><span id="filterSummary"></span>
+        </div>
+      </footer>
+    </main>
+    <dialog id="matchDialog">
+      <div class="section-heading">
+        <span id="matchDate"></span
+        ><button id="closeDialog" class="icon-button" aria-label="Close match">
+          ×
+        </button>
+      </div>
+      <div id="matchDetail"></div>
+    </dialog>
+  </body>
+</html>

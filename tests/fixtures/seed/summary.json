@@ -1,0 +1,53 @@
+[
+  {
+    "clubId": "900001",
+    "wins": "35",
+    "losses": "17",
+    "ties": "10",
+    "gamesPlayed": "62",
+    "gamesPlayedPlayoff": "0",
+    "goals": "152",
+    "goalsAgainst": "111",
+    "cleanSheets": "13",
+    "points": "46",
+    "reputationtier": "0",
+    "promotions": "4",
+    "relegations": "0",
+    "bestDivision": "2",
+    "clubInfo": {
+      "name": "Demo FC",
+      "clubId": 900001,
+      "regionId": 4543827,
+      "teamId": 241,
+      "customKit": {
+        "stadName": "Demo name",
+        "kitId": "1974272",
+        "seasonalTeamId": "131397",
+        "seasonalKitId": "1076404224",
+        "selectedKitType": "1",
+        "customKitId": "7718",
+        "kitColor1": "16773120",
+        "kitColor2": "592653",
+        "kitColor3": "4133724",
+        "kitColor4": "4133724",
+        "customAwayKitId": "7516",
+        "kitAColor1": "16400136",
+        "kitAColor2": "396864",
+        "kitAColor3": "15921906",
+        "kitAColor4": "7191854",
+        "customThirdKitId": "7522",
+        "kitThrdColor1": "7712936",
+        "kitThrdColor2": "1711155",
+        "kitThrdColor3": "396864",
+        "kitThrdColor4": "1845524",
+        "dCustomKit": "0",
+        "customKeeperKitId": "5005",
+        "crestColor": "0",
+        "crestAssetId": "99160204"
+      }
+    },
+    "platform": "common-gen5",
+    "clubName": "Demo FC",
+    "currentDivision": "2"
+  }
+]
